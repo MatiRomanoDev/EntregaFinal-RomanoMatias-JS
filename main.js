@@ -2,6 +2,15 @@
 
 // Ejecutar las funciones por consola para filtrar por apellido, area en que se atendió o para agregar un nuevo paciente si no se encuentra en la lista.
 
+/* if (localStorage.getItem('listaPacientes')) {
+    listaPacientes = JSON.parse(localStorage.getItem('listaPacientes'));
+} */
+
+const inputApellido = document.getElementById("busquedaApellido")
+const buscarApellido = document.getElementById("botonBuscar")
+const agregarPaciente = document.getElementById("botonAgregar")
+
+
 const Paciente = function(nombre,apellido,dni,area,fecha){
     this.nombre = nombre
     this.apellido = apellido
@@ -15,7 +24,7 @@ let paciente2 = new Paciente("Maria", "Lopez", 234567890, "Pediatria", new Date(
 let paciente3 = new Paciente("Carlos", "Martinez", 345678901, "Neurologia", new Date("2002-02-15"));
 let paciente4 = new Paciente("Laura", "Rodriguez", 456789012, "Dermatologia", new Date("2007-07-30"));
 let paciente5 = new Paciente("Jose", "Hernandez", 567890123, "Oftalmologia", new Date("2004-11-18"));
-let paciente6 = new Paciente("Ana", "Sanchez", 678901234, "Cardiologia", new Date("2000-08-05"));
+let paciente6 = new Paciente("Ana", "Flores", 678901234, "Cardiologia", new Date("2000-08-05"));
 let paciente7 = new Paciente("Pedro", "Gomez", 789012345, "Pediatria", new Date("2006-03-12"));
 let paciente8 = new Paciente("Isabel", "Diaz", 890123456, "Neurologia", new Date("2001-10-27"));
 let paciente9 = new Paciente("Martin", "Perez", 901234567, "Dermatologia", new Date("2009-01-08"));
@@ -35,7 +44,7 @@ let paciente22 = new Paciente("Adriana", "Cabrera", 133567890, "Pediatria", new 
 let paciente23 = new Paciente("Andres", "Guerrero", 144678901, "Neurologia", new Date("2002-06-20"));
 let paciente24 = new Paciente("Valentina", "Flores", 155789012, "Dermatologia", new Date("2008-09-11"));
 let paciente25 = new Paciente("Alejandro", "Mendoza", 166890123, "Oftalmologia", new Date("2005-10-26"));
-let paciente26 = new Paciente("Camila", "Castillo", 177901234, "Cardiologia", new Date("2007-03-14"));
+let paciente26 = new Paciente("Camila", "Flores", 177901234, "Cardiologia", new Date("2007-03-14"));
 let paciente27 = new Paciente("Roberto", "Rojas", 188012345, "Pediatria", new Date("2003-08-09"));
 let paciente28 = new Paciente("Paola", "Navarro", 199123456, "Neurologia", new Date("2001-09-21"));
 let paciente29 = new Paciente("Hector", "Gutierrez", 200234567, "Dermatologia", new Date("2009-02-16"));
@@ -43,7 +52,7 @@ let paciente30 = new Paciente("Carolina", "Jimenez", 211345678, "Oftalmologia", 
 let paciente31 = new Paciente("Fernando", "Lara", 222456789, "Cardiologia", new Date("2006-07-18"));
 let paciente32 = new Paciente("Silvia", "Cruz", 233567890, "Pediatria", new Date("2005-12-12"));
 let paciente33 = new Paciente("Julio", "Aguilar", 244678901, "Neurologia", new Date("2004-03-29"));
-let paciente34 = new Paciente("Gloria", "Peralta", 255789012, "Dermatologia", new Date("2002-10-07"));
+let paciente34 = new Paciente("Gloria", "Flores", 255789012, "Dermatologia", new Date("2002-10-07"));
 let paciente35 = new Paciente("Ricardo", "Vargas", 266890123, "Oftalmologia", new Date("2003-01-24"));
 let paciente36 = new Paciente("Alicia", "Moreno", 277901234, "Cardiologia", new Date("2008-06-01"));
 let paciente37 = new Paciente("Juan Carlos", "Cordero", 288012345, "Pediatria", new Date("2006-09-14"));
@@ -59,8 +68,9 @@ let paciente46 = new Paciente("Daniela", "Villalobos", 377901234, "Cardiologia",
 let paciente47 = new Paciente("Eduardo", "Hidalgo", 388012345, "Pediatria", new Date("2008-04-12"));
 let paciente48 = new Paciente("Roxana", "Mendez", 399123456, "Neurologia", new Date("2004-07-27"));
 let paciente49 = new Paciente("Juan Pablo", "Miranda", 400234567, "Dermatologia", new Date("2002-12-02"));
-let paciente50 = new Paciente("Mariana", "Chavez", 411345678, "Oftalmologia", new Date("2001-05-09"));
+let paciente50 = new Paciente("Mariana", "Flores", 411345678, "Oftalmologia", new Date("2001-05-09"));
 
+// Hay 5 pacientes con apellido "flores" ( para probar en el dom)
 
 let listaPacientes = [
     paciente1, paciente2, paciente3, paciente4, paciente5,
@@ -75,7 +85,82 @@ let listaPacientes = [
     paciente46, paciente47, paciente48, paciente49, paciente50
 ]
 
-function filtrarApellido(){
+
+const resultadoBusqueda = document.getElementById("resultadoBusqueda");
+
+    function mostrarResultados(pacientesEncontrados) {
+        resultadoBusqueda.innerHTML = "";
+        if (pacientesEncontrados.length > 0) {
+            pacientesEncontrados.forEach((paciente) => {
+                const divResultado = document.createElement("div");
+                divResultado.classList.add("resultado");
+                divResultado.innerHTML = `
+                <h2> ${paciente.nombre} ${paciente.apellido}</h2>
+                <p> DNI: ${paciente.dni}</p>
+                <p> Área: ${paciente.area}</p>
+                <p> Fecha de atención: ${paciente.fecha.toDateString()}</p>
+                `;
+                resultadoBusqueda.appendChild(divResultado);
+            });
+        } else {
+            resultadoBusqueda.textContent = "No se encontraron pacientes con ese apellido. Para agregarlo al sistema, pulse Agregar Paciente";
+        }
+    }
+    buscarApellido.addEventListener("click", function() {
+        // Obtén una referencia al elemento de búsqueda por apellido.
+        const inputBusquedaApellido = document.getElementById("busquedaApellido");
+        // Obtiene el apellido ingresado por el usuario.
+        const apellidoIngresado = inputBusquedaApellido.value;
+        // Filtra la lista de pacientes por apellido.
+        const pacientesEncontrados = listaPacientes.filter((paciente) => paciente.apellido.toUpperCase().includes(apellidoIngresado.toUpperCase()));
+        // Llama a la función para mostrar los resultados en el DOM.
+        mostrarResultados(pacientesEncontrados);
+    });
+
+    agregarPaciente.addEventListener("click", function() {
+        mostrarFormularioAgregarPaciente();
+    });
+
+    function mostrarFormularioAgregarPaciente() {
+        resultadoBusqueda.innerHTML = "";
+
+        const formAgregarPaciente = document.createElement("form");
+        formAgregarPaciente.innerHTML = `
+            <h3> Agregar Nuevo Paciente</h3>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required><br>
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" name="apellido" required><br>
+            <label for="dni">DNI:</label>
+            <input type="number" id="dni" name="dni" required><br>
+            <label for="area">Área de Atención:</label>
+            <input type="text" id="area" name="area" required><br>
+            <input type="submit" value="Agregar">
+        `;
+
+        resultadoBusqueda.appendChild(formAgregarPaciente);
+
+        formAgregarPaciente.addEventListener("submit", function(e) {
+            e.preventDefault();
+            const nombre = formAgregarPaciente.querySelector("#nombre").value;
+            const apellido = formAgregarPaciente.querySelector("#apellido").value;
+            const dni = formAgregarPaciente.querySelector("#dni").value;
+            const area = formAgregarPaciente.querySelector("#area").value;
+            const fecha = new Date();
+            const paciente = new Paciente(nombre, apellido, dni, area, fecha);
+            listaPacientes.push(paciente);
+            localStorage.setItem('listaPacientes', JSON.stringify(listaPacientes));
+            alert(nombre + " " + apellido + " ha sido agregado a la base de datos. Muchas gracias");
+            resultadoBusqueda.innerHTML = "";
+        });
+    }
+    
+
+
+
+
+
+/* function filtrarApellido(){
     let apellidoBuscado = prompt("Por favor, ingrese el apellido del paciente a buscar: ").toUpperCase().trim();
 
     let pacientesEncontrados = listaPacientes.filter((paciente) => paciente.apellido.toUpperCase().includes(apellidoBuscado))
@@ -107,4 +192,4 @@ function agregarPacientes (){
     alert(nombre + " " + apellido + " ha sido agregado a la base de datos. Muchas gracias")
     console.table(listaPacientes)
 
-}
+} */
