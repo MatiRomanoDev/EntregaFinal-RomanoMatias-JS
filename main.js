@@ -107,13 +107,13 @@ const resultadoBusqueda = document.getElementById("resultadoBusqueda");
         }
     }
     buscarApellido.addEventListener("click", function() {
-        // Obtén una referencia al elemento de búsqueda por apellido.
+        
         const inputBusquedaApellido = document.getElementById("busquedaApellido");
-        // Obtiene el apellido ingresado por el usuario.
+        
         const apellidoIngresado = inputBusquedaApellido.value;
-        // Filtra la lista de pacientes por apellido.
+        
         const pacientesEncontrados = listaPacientes.filter((paciente) => paciente.apellido.toUpperCase().includes(apellidoIngresado.toUpperCase()));
-        // Llama a la función para mostrar los resultados en el DOM.
+        
         mostrarResultados(pacientesEncontrados);
     });
 
@@ -153,43 +153,4 @@ const resultadoBusqueda = document.getElementById("resultadoBusqueda");
             alert(nombre + " " + apellido + " ha sido agregado a la base de datos. Muchas gracias");
             resultadoBusqueda.innerHTML = "";
         });
-    }
-    
-
-
-
-
-
-/* function filtrarApellido(){
-    let apellidoBuscado = prompt("Por favor, ingrese el apellido del paciente a buscar: ").toUpperCase().trim();
-
-    let pacientesEncontrados = listaPacientes.filter((paciente) => paciente.apellido.toUpperCase().includes(apellidoBuscado))
-
-    if (apellidoBuscado !== "" && pacientesEncontrados.length > 0  ) { 
-        console.table(pacientesEncontrados)
-    } else {
-        alert(`No se encontraron pacientes con el apellido ${apellidoBuscado}. Por favor agréguelo a la base de datos de pacientes.`);
-    } 
-    
-}
-
-function filtrarArea(){
-    let area = prompt("Ingrese el area en la que desea buscar pacientes").toUpperCase().trim()
-    let busquedaArea = listaPacientes.filter((paciente) => paciente.area.toUpperCase().includes(area))
-    console.table(busquedaArea)
-}
-
-function agregarPacientes (){
-    alert("Agregar nuevo paciente a la base de datos")
-    let nombre = prompt("Ingrese el nombre del paciente: ")
-    let apellido = prompt("Ingrese el apellido del paciente:")
-    let dni = parseFloat(prompt("Ingrese el DNI del paciente:"))
-    let area = prompt("Ingrese el area donde se desea atender el paciente:")
-    let fecha = new Date()
-        
-    let paciente = new Paciente(nombre,apellido,dni,area,fecha)
-    listaPacientes.push(paciente)
-    alert(nombre + " " + apellido + " ha sido agregado a la base de datos. Muchas gracias")
-    console.table(listaPacientes)
-
-} */
+    }    
