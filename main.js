@@ -1,23 +1,12 @@
-// Simulador de pacientes de una clinica
+const Paciente = function (nombre, apellido, dni, area, fecha) {
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.dni = dni;
+    this.area = area;
+    this.fecha = fecha;
+}
 
-// Ejecutar las funciones por consola para filtrar por apellido, area en que se atendió o para agregar un nuevo paciente si no se encuentra en la lista.
-
-/* if (localStorage.getItem('listaPacientes')) {
-    listaPacientes = JSON.parse(localStorage.getItem('listaPacientes'));
-} */
-
-const inputApellido = document.getElementById("busquedaApellido")
-const buscarApellido = document.getElementById("botonBuscar")
-const agregarPaciente = document.getElementById("botonAgregar")
-
-
-const Paciente = function(nombre,apellido,dni,area,fecha){
-    this.nombre = nombre
-    this.apellido = apellido
-    this.dni = dni
-    this.area = area
-    this.fecha = fecha
-} 
+let listaPacientes;
 
 let paciente1 = new Paciente("Juan", "Garcia", 123456789, "Cardiologia", new Date("2003-05-10"));
 let paciente2 = new Paciente("Maria", "Lopez", 234567890, "Pediatria", new Date("2005-09-22"));
@@ -70,87 +59,92 @@ let paciente48 = new Paciente("Roxana", "Mendez", 399123456, "Neurologia", new D
 let paciente49 = new Paciente("Juan Pablo", "Miranda", 400234567, "Dermatologia", new Date("2002-12-02"));
 let paciente50 = new Paciente("Mariana", "Flores", 411345678, "Oftalmologia", new Date("2001-05-09"));
 
-// Hay 5 pacientes con apellido "flores" ( para probar en el dom)
-
-let listaPacientes = [
-    paciente1, paciente2, paciente3, paciente4, paciente5,
-    paciente6, paciente7, paciente8, paciente9, paciente10,
-    paciente11, paciente12, paciente13, paciente14, paciente15,
-    paciente16, paciente17, paciente18, paciente19, paciente20,
-    paciente21, paciente22, paciente23, paciente24, paciente25,
-    paciente26, paciente27, paciente28, paciente29, paciente30,
-    paciente31, paciente32, paciente33, paciente34, paciente35,
-    paciente36, paciente37, paciente38, paciente39, paciente40,
-    paciente41, paciente42, paciente43, paciente44, paciente45,
-    paciente46, paciente47, paciente48, paciente49, paciente50
-]
 
 
+// Cargar la lista de pacientes desde el localStorage al cargar la página
+if (localStorage.getItem("listaPacientes")) {
+    listaPacientes = JSON.parse(localStorage.getItem("listaPacientes"));
+}else{
+    listaPacientes = [
+        paciente1, paciente2, paciente3, paciente4, paciente5,
+        paciente6, paciente7, paciente8, paciente9, paciente10,
+        paciente11, paciente12, paciente13, paciente14, paciente15,
+        paciente16, paciente17, paciente18, paciente19, paciente20,
+        paciente21, paciente22, paciente23, paciente24, paciente25,
+        paciente26, paciente27, paciente28, paciente29, paciente30,
+        paciente31, paciente32, paciente33, paciente34, paciente35,
+        paciente36, paciente37, paciente38, paciente39, paciente40,
+        paciente41, paciente42, paciente43, paciente44, paciente45,
+        paciente46, paciente47, paciente48, paciente49, paciente50
+    ]
+}
+
+const inputApellido = document.getElementById("busquedaApellido");
+const buscarApellido = document.getElementById("botonBuscar");
+const agregarPaciente = document.getElementById("botonAgregar");
 const resultadoBusqueda = document.getElementById("resultadoBusqueda");
 
-    function mostrarResultados(pacientesEncontrados) {
-        resultadoBusqueda.innerHTML = "";
-        if (pacientesEncontrados.length > 0) {
-            pacientesEncontrados.forEach((paciente) => {
-                const divResultado = document.createElement("div");
-                divResultado.classList.add("resultado");
-                divResultado.innerHTML = `
+function mostrarResultados(pacientesEncontrados) {
+    resultadoBusqueda.innerHTML = "";
+    if (pacientesEncontrados.length > 0) {
+        pacientesEncontrados.forEach((paciente) => {
+            const divResultado = document.createElement("div");
+            divResultado.classList.add("resultado");
+            divResultado.innerHTML = `
                 <h2> ${paciente.nombre} ${paciente.apellido}</h2>
                 <p> DNI: ${paciente.dni}</p>
                 <p> Área: ${paciente.area}</p>
-                <p> Fecha de atención: ${paciente.fecha.toDateString()}</p>
-                `;
-                resultadoBusqueda.appendChild(divResultado);
-            });
-        } else {
-            resultadoBusqueda.textContent = "No se encontraron pacientes con ese apellido. Para agregarlo al sistema, pulse Agregar Paciente";
-        }
-    }
-    buscarApellido.addEventListener("click", function() {
-        
-        const inputBusquedaApellido = document.getElementById("busquedaApellido");
-        
-        const apellidoIngresado = inputBusquedaApellido.value;
-        
-        const pacientesEncontrados = listaPacientes.filter((paciente) => paciente.apellido.toUpperCase().includes(apellidoIngresado.toUpperCase()));
-        
-        mostrarResultados(pacientesEncontrados);
-    });
-
-    agregarPaciente.addEventListener("click", function() {
-        mostrarFormularioAgregarPaciente();
-    });
-
-    function mostrarFormularioAgregarPaciente() {
-        resultadoBusqueda.innerHTML = "";
-
-        const formAgregarPaciente = document.createElement("form");
-        formAgregarPaciente.innerHTML = `
-            <h3> Agregar Nuevo Paciente</h3>
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required><br>
-            <label for="apellido">Apellido:</label>
-            <input type="text" id="apellido" name="apellido" required><br>
-            <label for="dni">DNI:</label>
-            <input type="number" id="dni" name="dni" required><br>
-            <label for="area">Área de Atención:</label>
-            <input type="text" id="area" name="area" required><br>
-            <input type="submit" value="Agregar">
-        `;
-
-        resultadoBusqueda.appendChild(formAgregarPaciente);
-
-        formAgregarPaciente.addEventListener("submit", function(e) {
-            e.preventDefault();
-            const nombre = formAgregarPaciente.querySelector("#nombre").value;
-            const apellido = formAgregarPaciente.querySelector("#apellido").value;
-            const dni = formAgregarPaciente.querySelector("#dni").value;
-            const area = formAgregarPaciente.querySelector("#area").value;
-            const fecha = new Date();
-            const paciente = new Paciente(nombre, apellido, dni, area, fecha);
-            listaPacientes.push(paciente);
-            localStorage.setItem('listaPacientes', JSON.stringify(listaPacientes));
-            alert(nombre + " " + apellido + " ha sido agregado a la base de datos. Muchas gracias");
-            resultadoBusqueda.innerHTML = "";
+                <p> Fecha de agregado: ${paciente.fecha}</p>  
+            `;
+            resultadoBusqueda.appendChild(divResultado);
         });
-    }    
+    } else {
+        resultadoBusqueda.textContent = "No se encontraron pacientes con ese apellido. Para agregarlo al sistema, pulse Agregar Paciente";
+    }
+}
+
+
+buscarApellido.addEventListener("click", function () {
+    const inputBusquedaApellido = document.getElementById("busquedaApellido");
+    const apellidoIngresado = inputBusquedaApellido.value;
+    const pacientesEncontrados = listaPacientes.filter((paciente) => paciente.apellido.toUpperCase().includes(apellidoIngresado.toUpperCase()));
+    mostrarResultados(pacientesEncontrados);
+});
+
+agregarPaciente.addEventListener("click", function () {
+    mostrarFormularioAgregarPaciente();
+});
+
+function mostrarFormularioAgregarPaciente() {
+    resultadoBusqueda.innerHTML = "";
+
+    const formAgregarPaciente = document.createElement("form");
+    formAgregarPaciente.innerHTML = `
+        <h3> Agregar Nuevo Paciente</h3>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required><br>
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" name="apellido" required><br>
+        <label for="dni">DNI:</label>
+        <input type="number" id="dni" name="dni" required><br>
+        <label for="area">Área de Atención:</label>
+        <input type="text" id="area" name="area" required><br>
+        <input type="submit" value="Agregar">
+    `;
+
+    resultadoBusqueda.appendChild(formAgregarPaciente);
+
+    formAgregarPaciente.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const nombre = formAgregarPaciente.querySelector("#nombre").value;
+        const apellido = formAgregarPaciente.querySelector("#apellido").value;
+        const dni = formAgregarPaciente.querySelector("#dni").value;
+        const area = formAgregarPaciente.querySelector("#area").value;
+        const fecha = new Date();
+        const paciente = new Paciente(nombre, apellido, dni, area, fecha);
+        listaPacientes.push(paciente);
+        localStorage.setItem("listaPacientes", JSON.stringify(listaPacientes));
+        alert(nombre + " " + apellido + " ha sido agregado a la base de datos. Muchas gracias");
+        resultadoBusqueda.innerHTML = "";
+    });
+}
