@@ -1,0 +1,111 @@
+{
+  "pacientes":[
+    {
+      "nombre": "Juan",
+      "apellido": "Garcia",
+      "dni": 123456789,
+      "area": "Cardiologia",
+      "fecha": "2003-05-10"
+    },
+    {
+      "nombre": "Maria",
+      "apellido": "Lopez",
+      "dni": 234567890,
+      "area": "Pediatria",
+      "fecha": "2005-09-22"
+    },
+    {
+      "nombre": "Carlos",
+      "apellido": "Martinez",
+      "dni": 345678901,
+      "area": "Neurologia",
+      "fecha": "2002-02-15"
+    },
+    {
+      "nombre": "Laura",
+      "apellido": "Rodriguez",
+      "dni": 456789012,
+      "area": "Dermatologia",
+      "fecha": "2007-07-30"
+    },
+    {
+      "nombre": "Jose",
+      "apellido": "Hernandez",
+      "dni": 567890123,
+      "area": "Oftalmologia",
+      "fecha": "2004-11-18"
+    },
+    {
+      "nombre": "Ana",
+      "apellido": "Flores",
+      "dni": 678901234,
+      "area": "Cardiologia",
+      "fecha": "2000-08-05"
+    },
+    {
+      "nombre": "Pedro",
+      "apellido": "Gomez",
+      "dni": 789012345,
+      "area": "Pediatria",
+      "fecha": "2006-03-12"
+    },
+    {
+      "nombre": "Isabel",
+      "apellido": "Diaz",
+      "dni": 890123456,
+      "area": "Neurologia",
+      "fecha": "2001-10-27"
+    },
+    {
+      "nombre": "Martin",
+      "apellido": "Perez",
+      "dni": 901234567,
+      "area": "Dermatologia",
+      "fecha": "2009-01-08"
+    },
+    {
+      "nombre": "Luisa",
+      "apellido": "Torres",
+      "dni": 112345678,
+      "area": "Oftalmologia",
+      "fecha": "2008-06-14"
+    },
+    {
+      "nombre": "Javier",
+      "apellido": "Fernandez",
+      "dni": 223456789,
+      "area": "Cardiologia",
+      "fecha": "2002-12-03"
+    },
+    {
+      "nombre": "Rosa",
+      "apellido": "Ramirez",
+      "dni": 334567890,
+      "area": "Pediatria",
+      "fecha": "2005-04-19"
+    },
+    {
+      "nombre": "Miguel",
+      "apellido": "Santos",
+      "dni": 445678901,
+      "area": "Neurologia",
+      "fecha": "2004-08-27"
+    },
+    {
+      "nombre": "Carmen",
+      "apellido": "Vega",
+      "dni": 556789012,
+      "area": "Dermatologia",
+      "fecha": "2006-10-10"
+    },
+    {
+      "nombre": "Alberto",
+      "apellido": "Suarez",
+      "dni": 667890123,
+      "area": "Oftalmologia",
+      "fecha": "2000-09-15"
+    }
+  ]
+}
+
+    

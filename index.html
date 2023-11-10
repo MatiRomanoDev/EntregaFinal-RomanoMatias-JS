@@ -4,18 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="estilo.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Document</title>
 </head>
+
 <body>
+    <header>
+        <h1>Registro de pacientes Sanatorio Junin</h1>
+    </header> 
 
-    <h1>Registro de pacientes Sanatorio Junin</h1>
-    
-    <input type="text" id="busquedaApellido" placeholder="Ingrese el apellido ">
-    <button id="botonBuscar">Buscar</button>
-    <button id="botonAgregar">Agregar Paciente</button>
-    <div class="divPaciente" id="resultadoBusqueda"></div>
+    <main>
+        <input class="inputBusqueda" type="text" id="busquedaApellido" placeholder="Ingrese el apellido ">
+        <button class="boton" id="botonBuscar">Buscar</button>
+        <button class="boton" id="botonAgregar">Agregar Paciente</button>
+        <div class="main-container">
+            <div class="divPaciente" id="resultadoBusqueda"></div>
+            <div id="contenedor-derecho"></div>
+        </div>       
 
-
+    </main> 
     <script src="main.js"></script>
 </body>
 </html>
